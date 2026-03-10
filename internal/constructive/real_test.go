@@ -216,3 +216,61 @@ func TestMulInvalidEpsilon(t *testing.T) {
 		t.Fatalf("Approx() error = %v, want %v", err, ErrInvalidEpsilon)
 	}
 }
+func TestCompareLess(t *testing.T) {
+	a := NewConstant(1.0)
+	b := NewConstant(2.0)
+
+	got, err := Compare(a, b, 1e-9)
+	if err != nil {
+		t.Fatalf("Compare() returned error: %v", err)
+	}
+
+	want := -1
+	if got != want {
+		t.Fatalf("Compare() = %v, want %v", got, want)
+	}
+}
+
+func TestCompareGreater(t *testing.T) {
+	a := NewConstant(3.0)
+	b := NewConstant(2.0)
+
+	got, err := Compare(a, b, 1e-9)
+	if err != nil {
+		t.Fatalf("Compare() returned error: %v", err)
+	}
+
+	want := 1
+	if got != want {
+		t.Fatalf("Compare() = %v, want %v", got, want)
+	}
+}
+
+func TestCompareEqualWithinTolerance(t *testing.T) {
+	a := NewConstant(1.0000001)
+	b := NewConstant(1.0000002)
+
+	got, err := Compare(a, b, 1e-6)
+	if err != nil {
+		t.Fatalf("Compare() returned error: %v", err)
+	}
+
+	want := 0
+	if got != want {
+		t.Fatalf("Compare() = %v, want %v", got, want)
+	}
+}
+
+func TestCompareInvalidEpsilon(t *testing.T) {
+	a := NewConstant(1.0)
+	b := NewConstant(2.0)
+
+	_, err := Compare(a, b, 0)
+	if err == nil {
+		t.Fatal("Compare() error = nil, want non-nil")
+	}
+
+	if err != ErrInvalidEpsilon {
+		t.Fatalf("Compare() error = %v, want %v", err, ErrInvalidEpsilon)
+	}
+}
