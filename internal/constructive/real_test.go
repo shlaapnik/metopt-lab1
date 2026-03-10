@@ -27,15 +27,15 @@ func TestNewConstantApproxInvalidEpsilon(t *testing.T) {
 		t.Fatal("Approx() error = nil, want non-nil")
 	}
 
-	if err != ErrNonPositiveEpsilon {
-		t.Fatalf("Approx() error = %v, want %v", err, ErrNonPositiveEpsilon)
+	if err != ErrInvalidEpsilon {
+		t.Fatalf("Approx() error = %v, want %v", err, ErrInvalidEpsilon)
 	}
 }
 
 func TestNewFromFunc(t *testing.T) {
-	r := NewFromFunc(func(eps float64) (float64, error) {
+	r := NewFromApprox(func(eps float64) (float64, error) {
 		if eps <= 0 {
-			return 0, ErrNonPositiveEpsilon
+			return 0, ErrInvalidEpsilon
 		}
 
 		// Приближаем 1/3 с шагом eps.
@@ -73,9 +73,9 @@ func TestNewFromFunc(t *testing.T) {
 }
 
 func TestNewFromFuncInvalidEpsilon(t *testing.T) {
-	r := NewFromFunc(func(eps float64) (float64, error) {
+	r := NewFromApprox(func(eps float64) (float64, error) {
 		if eps <= 0 {
-			return 0, ErrNonPositiveEpsilon
+			return 0, ErrInvalidEpsilon
 		}
 		return math.Pi, nil
 	})
@@ -85,15 +85,15 @@ func TestNewFromFuncInvalidEpsilon(t *testing.T) {
 		t.Fatal("Approx() error = nil, want non-nil")
 	}
 
-	if err != ErrNonPositiveEpsilon {
-		t.Fatalf("Approx() error = %v, want %v", err, ErrNonPositiveEpsilon)
+	if err != ErrInvalidEpsilon {
+		t.Fatalf("Approx() error = %v, want %v", err, ErrInvalidEpsilon)
 	}
 }
 
 func TestNewFromFuncImprovesApproximationWithSmallerEpsilon(t *testing.T) {
-	r := NewFromFunc(func(eps float64) (float64, error) {
+	r := NewFromApprox(func(eps float64) (float64, error) {
 		if eps <= 0 {
-			return 0, ErrNonPositiveEpsilon
+			return 0, ErrInvalidEpsilon
 		}
 
 		value := math.Sqrt(2)

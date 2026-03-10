@@ -2,4 +2,4 @@
 
 import "errors"
 
-var ErrNonPositiveEpsilon = errors.New("epsilon must be positive")
+var ErrInvalidEpsilon = errors.New("epsilon must be positive")
