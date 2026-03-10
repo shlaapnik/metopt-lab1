@@ -37,8 +37,6 @@ func TestNewFromFunc(t *testing.T) {
 		if eps <= 0 {
 			return 0, ErrInvalidEpsilon
 		}
-
-		// Приближаем 1/3 с шагом eps.
 		value := 1.0 / 3.0
 		approx := math.Round(value/eps) * eps
 		return approx, nil
@@ -118,5 +116,103 @@ func TestNewFromFuncImprovesApproximationWithSmallerEpsilon(t *testing.T) {
 
 	if fineError > coarseError {
 		t.Fatalf("finer approximation is worse: coarse error = %v, fine error = %v", coarseError, fineError)
+	}
+}
+func TestAdd(t *testing.T) {
+	a := NewConstant(2.0)
+	b := NewConstant(3.5)
+
+	sum := Add(a, b)
+
+	got, err := sum.Approx(1e-9)
+	if err != nil {
+		t.Fatalf("Approx() returned error: %v", err)
+	}
+
+	want := 5.5
+	if math.Abs(got-want) > 1e-12 {
+		t.Fatalf("sum.Approx() = %v, want approximately %v", got, want)
+	}
+}
+
+func TestSub(t *testing.T) {
+	a := NewConstant(5.0)
+	b := NewConstant(1.5)
+
+	diff := Sub(a, b)
+
+	got, err := diff.Approx(1e-9)
+	if err != nil {
+		t.Fatalf("Approx() returned error: %v", err)
+	}
+
+	want := 3.5
+	if math.Abs(got-want) > 1e-12 {
+		t.Fatalf("diff.Approx() = %v, want approximately %v", got, want)
+	}
+}
+
+func TestMul(t *testing.T) {
+	a := NewConstant(2.0)
+	b := NewConstant(4.0)
+
+	product := Mul(a, b)
+
+	got, err := product.Approx(1e-9)
+	if err != nil {
+		t.Fatalf("Approx() returned error: %v", err)
+	}
+
+	want := 8.0
+	if math.Abs(got-want) > 1e-12 {
+		t.Fatalf("product.Approx() = %v, want approximately %v", got, want)
+	}
+}
+
+func TestAddInvalidEpsilon(t *testing.T) {
+	a := NewConstant(1.0)
+	b := NewConstant(2.0)
+
+	sum := Add(a, b)
+
+	_, err := sum.Approx(0)
+	if err == nil {
+		t.Fatal("Approx() error = nil, want non-nil")
+	}
+
+	if err != ErrInvalidEpsilon {
+		t.Fatalf("Approx() error = %v, want %v", err, ErrInvalidEpsilon)
+	}
+}
+
+func TestSubInvalidEpsilon(t *testing.T) {
+	a := NewConstant(5.0)
+	b := NewConstant(2.0)
+
+	diff := Sub(a, b)
+
+	_, err := diff.Approx(-1)
+	if err == nil {
+		t.Fatal("Approx() error = nil, want non-nil")
+	}
+
+	if err != ErrInvalidEpsilon {
+		t.Fatalf("Approx() error = %v, want %v", err, ErrInvalidEpsilon)
+	}
+}
+
+func TestMulInvalidEpsilon(t *testing.T) {
+	a := NewConstant(3.0)
+	b := NewConstant(4.0)
+
+	product := Mul(a, b)
+
+	_, err := product.Approx(0)
+	if err == nil {
+		t.Fatal("Approx() error = nil, want non-nil")
+	}
+
+	if err != ErrInvalidEpsilon {
+		t.Fatalf("Approx() error = %v, want %v", err, ErrInvalidEpsilon)
 	}
 }
