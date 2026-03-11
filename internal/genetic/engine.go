@@ -2,34 +2,36 @@ package genetic
 
 import "math/rand"
 
-type Engine struct {
+type Engine[V Number] struct {
 	PopSize     int
 	Generations int
 
-	Bounds [][]float64
+	Bounds [][]V
 	Weight float64
 
-	Fitness     FitnessFunc
-	Selector    Selector
-	Crossover   Crossover
-	Mutator     Mutator
-	Replacement Replacement
+	Fitness     FitnessFunc[V]
+	Generator   GeneGenerator[V]
+	Selector    Selector[V]
+	Crossover   Crossover[V]
+	Mutator     Mutator[V]
+	Replacement Replacement[V]
 
-	Population *Population
+	Population *Population[V]
 	rand       *rand.Rand
 }
 
-func NewEngine(
-	bounds [][]float64,
-	fitness FitnessFunc,
-	selector Selector,
-	crossover Crossover,
-	mutator Mutator,
-	replacement Replacement,
+func NewEngine[V Number](
+	bounds [][]V,
+	fitness FitnessFunc[V],
+	geneGenerator GeneGenerator[V],
+	selector Selector[V],
+	crossover Crossover[V],
+	mutator Mutator[V],
+	replacement Replacement[V],
 	popSize int,
 	generations int,
 	weight float64,
-) *Engine {
+) *Engine[V] {
 	if popSize <= 0 {
 		popSize = 100
 	}
@@ -40,12 +42,13 @@ func NewEngine(
 		weight = -1.0
 	}
 
-	return &Engine{
+	return &Engine[V]{
 		PopSize:     popSize,
 		Generations: generations,
 		Bounds:      bounds,
 		Weight:      weight,
 		Fitness:     fitness,
+		Generator:   geneGenerator,
 		Selector:    selector,
 		Crossover:   crossover,
 		Mutator:     mutator,
@@ -54,34 +57,34 @@ func NewEngine(
 	}
 }
 
-func (e *Engine) initPopulation() {
+func (e *Engine[V]) initPopulation() {
 	dim := len(e.Bounds)
-	individuals := make([]Individual, e.PopSize)
+	individuals := make([]Individual[V], e.PopSize)
 
 	for i := 0; i < e.PopSize; i++ {
-		genes := make([]float64, dim)
+		genes := make([]V, dim)
 		for j := 0; j < dim; j++ {
-			genes[j] = RandomFloat(e.Bounds[j][0], e.Bounds[j][1])
+			genes[j] = e.Generator(j, e.Bounds[j])
 		}
-		individuals[i] = Individual{Genes: genes}
+		individuals[i] = Individual[V]{Genes: genes}
 	}
-	e.Population = &Population{Individuals: individuals}
+	e.Population = &Population[V]{Individuals: individuals}
 }
 
-func (e *Engine) evaluate(inds []Individual) {
+func (e *Engine[V]) evaluate(inds []Individual[V]) {
 	for i := range inds {
 		inds[i].Fitness = e.Fitness(inds[i].Genes)
 		inds[i].Score = inds[i].Fitness * e.Weight
 	}
 }
 
-func (e *Engine) Run() Individual {
+func (e *Engine[V]) Run() Individual[V] {
 	e.initPopulation()
 	e.evaluate(e.Population.Individuals)
 
 	for gen := 0; gen < e.Generations; gen++ {
 		parents := e.Selector.Select(e.Population, e.PopSize)
-		offspring := make([]Individual, 0, e.PopSize)
+		offspring := make([]Individual[V], 0, e.PopSize)
 
 		for i := 0; i < len(parents)-1; i += 2 {
 			child1, child2 := e.Crossover.Mate(parents[i], parents[i+1])
@@ -90,7 +93,7 @@ func (e *Engine) Run() Individual {
 		}
 
 		if len(offspring) < e.PopSize {
-			offspring = append(offspring, Individual{Genes: CloneGenes(parents[len(parents)-1].Genes)})
+			offspring = append(offspring, Individual[V]{Genes: CloneGenes(parents[len(parents)-1].Genes)})
 		}
 
 		for i := range offspring {
