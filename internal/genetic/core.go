@@ -15,7 +15,7 @@ type Population struct {
 func (p *Population) Best() Individual {
 	best := p.Individuals[0]
 	for _, indiv := range p.Individuals {
-		if indiv.Fitness > best.Fitness {
+		if indiv.Score > best.Score {
 			best = indiv
 		}
 	}
@@ -30,15 +30,19 @@ func (p *Population) Sort() {
 }
 
 type Selector interface {
-	Select(popul *Population, k int) []Individual
+	Select(pop *Population, k int) []Individual
 }
 
-type CrossoverType interface {
+type Crossover interface {
 	Mate(p1, p2 Individual) (Individual, Individual)
 }
 
 type Mutator interface {
-	Mutate(indiv *Individual, rate float64)
+	Mutate(indiv *Individual)
+}
+
+type Replacement interface {
+	Replace(oldPop *Population, offspring []Individual) []Individual
 }
 
 type FitnessFunc func(genes []float64) float64
