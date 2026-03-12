@@ -10,8 +10,8 @@ type Ranking[V genetic.Number] struct {
 	rand *rand.Rand
 }
 
-func NewRanking[V genetic.Number](r *rand.Rand) *Ranking[V] {
-	return &Ranking[V]{rand: r}
+func NewRanking[V genetic.Number]() *Ranking[V] {
+	return &Ranking[V]{rand: genetic.NewRand()}
 }
 
 func (r *Ranking[V]) Select(pop *genetic.Population[V], k int) []genetic.Individual[V] {
