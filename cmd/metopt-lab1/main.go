@@ -6,7 +6,7 @@ import (
 	"math"
 
 	"metopt-lab1/internal/annealing"
-	"metopt-lab1/internal/experiment"
+	"metopt-lab1/internal/experiment/annealing"
 	"metopt-lab1/internal/objective"
 )
 
