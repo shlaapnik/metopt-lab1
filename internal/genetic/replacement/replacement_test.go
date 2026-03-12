@@ -3,7 +3,7 @@ package replacement
 import (
 	"testing"
 
-	"github.com/shlaapnik/metopt-lab1/internal/genetic"
+	"metopt-lab1/internal/genetic"
 )
 
 func TestAbsentReplacement(t *testing.T) {

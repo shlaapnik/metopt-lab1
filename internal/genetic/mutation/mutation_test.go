@@ -4,7 +4,7 @@ import (
 	"reflect"
 	"testing"
 
-	"github.com/shlaapnik/metopt-lab1/internal/genetic"
+	"metopt-lab1/internal/genetic"
 )
 
 func TestGaussianMutator_ProbZero(t *testing.T) {

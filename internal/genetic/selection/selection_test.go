@@ -3,7 +3,7 @@ package selection
 import (
 	"testing"
 
-	"github.com/shlaapnik/metopt-lab1/internal/genetic"
+	"metopt-lab1/internal/genetic"
 )
 
 func TestTournamentSelection(t *testing.T) {

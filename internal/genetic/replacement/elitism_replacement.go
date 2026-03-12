@@ -1,6 +1,6 @@
 package replacement
 
-import "github.com/shlaapnik/metopt-lab1/internal/genetic"
+import "metopt-lab1/internal/genetic"
 
 type ElitismReplacement[V genetic.Number] struct {
 	EliteCount int

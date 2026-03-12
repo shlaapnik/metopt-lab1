@@ -3,7 +3,7 @@ package mutation
 import (
 	"math/rand"
 
-	"github.com/shlaapnik/metopt-lab1/internal/genetic"
+	"metopt-lab1/internal/genetic"
 )
 
 type GaussianMutator[V genetic.Number] struct {

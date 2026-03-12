@@ -4,7 +4,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/shlaapnik/metopt-lab1/internal/genetic"
+	"metopt-lab1/internal/genetic"
 )
 
 type SBXCrossover[V genetic.Number] struct {
