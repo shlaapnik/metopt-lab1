@@ -5,7 +5,7 @@ import (
 	"math"
 	"math/rand"
 
-	"github.com/shlaapnik/metopt-lab1/internal/objective"
+	"metopt-lab1/internal/objective"
 )
 
 type Config struct {

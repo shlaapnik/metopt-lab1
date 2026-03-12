@@ -3,8 +3,8 @@ package experiment
 import (
 	"time"
 
-	"github.com/shlaapnik/metopt-lab1/internal/annealing"
-	"github.com/shlaapnik/metopt-lab1/internal/objective"
+	"metopt-lab1/internal/annealing"
+	"metopt-lab1/internal/objective"
 )
 
 type AnnealingRun struct {

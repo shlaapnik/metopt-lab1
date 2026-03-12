@@ -5,9 +5,9 @@ import (
 	"log"
 	"math"
 
-	"github.com/shlaapnik/metopt-lab1/internal/annealing"
-	"github.com/shlaapnik/metopt-lab1/internal/experiment"
-	"github.com/shlaapnik/metopt-lab1/internal/objective"
+	"metopt-lab1/internal/annealing"
+	"metopt-lab1/internal/experiment"
+	"metopt-lab1/internal/objective"
 )
 
 func main() {

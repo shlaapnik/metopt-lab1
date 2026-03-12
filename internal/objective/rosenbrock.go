@@ -1,6 +1,6 @@
 package objective
 
-import "github.com/shlaapnik/metopt-lab1/internal/constructive"
+import "metopt-lab1/internal/constructive"
 
 type rosenbrock struct {
 	dimension int
