@@ -10,13 +10,15 @@ type GaussianMutator[V genetic.Number] struct {
 	Prob   float64
 	Bounds [][]float64
 	Scale  float64
+	rand   *rand.Rand
 }
 
-func NewGaussianMutator[V genetic.Number](prob float64, bounds [][]float64, scale float64) *GaussianMutator[V] {
+func NewGaussianMutator[V genetic.Number](prob float64, bounds [][]float64, scale float64, seed int) *GaussianMutator[V] {
 	return &GaussianMutator[V]{
 		Prob:   prob,
 		Bounds: bounds,
 		Scale:  scale,
+		rand:   genetic.NewRand(seed),
 	}
 }
 

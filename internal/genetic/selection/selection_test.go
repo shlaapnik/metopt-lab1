@@ -7,7 +7,7 @@ import (
 )
 
 func TestTournamentSelection(t *testing.T) {
-	sel := NewTournament[float64](100)
+	sel := NewTournament[float64](100, 0)
 	pop := &genetic.Population[float64]{
 		Individuals: []genetic.Individual[float64]{
 			{Score: 0.1},
@@ -24,7 +24,7 @@ func TestTournamentSelection(t *testing.T) {
 }
 
 func TestRankingSelection(t *testing.T) {
-	sel := NewRanking[float64]()
+	sel := NewRanking[float64](0)
 	pop := &genetic.Population[float64]{
 		Individuals: []genetic.Individual[float64]{
 			{Score: 10.0},

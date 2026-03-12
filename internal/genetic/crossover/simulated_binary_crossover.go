@@ -11,13 +11,15 @@ type SBXCrossover[V genetic.Number] struct {
 	Prob   float64
 	Eta    float64
 	Bounds [][]float64
+	rand   *rand.Rand
 }
 
-func NewSBXCrossover[V genetic.Number](prob float64, eta float64, bounds [][]float64) *SBXCrossover[V] {
+func NewSBXCrossover[V genetic.Number](prob float64, eta float64, bounds [][]float64, seed int) *SBXCrossover[V] {
 	return &SBXCrossover[V]{
 		Prob:   prob,
 		Eta:    eta,
 		Bounds: bounds,
+		rand:   genetic.NewRand(seed),
 	}
 }
 

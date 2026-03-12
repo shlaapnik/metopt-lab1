@@ -11,11 +11,11 @@ type Tournament[V genetic.Number] struct {
 	rand *rand.Rand
 }
 
-func NewTournament[V genetic.Number](size int) *Tournament[V] {
+func NewTournament[V genetic.Number](size int, seed int) *Tournament[V] {
 	if size <= 0 {
 		size = 3
 	}
-	return &Tournament[V]{Size: size, rand: genetic.NewRand()}
+	return &Tournament[V]{Size: size, rand: genetic.NewRand(seed)}
 }
 
 func (t *Tournament[V]) Select(pop *genetic.Population[V], k int) []genetic.Individual[V] {

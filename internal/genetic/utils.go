@@ -2,11 +2,14 @@ package genetic
 
 import (
 	"math/rand"
-	"time"
 )
 
-func NewRand() *rand.Rand {
-	return rand.New(rand.NewSource(time.Now().UnixNano()))
+func NewRand(seed int) *rand.Rand {
+	s := int64(seed)
+	if s <= 0 {
+		s = 1
+	}
+	return rand.New(rand.NewSource(s))
 }
 
 func RandomFloat(min, max float64) float64 {

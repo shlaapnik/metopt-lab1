@@ -9,7 +9,7 @@ import (
 
 func TestBLXCrossover_ProbZero(t *testing.T) {
 	bounds := [][]float64{{0.0, 10.0}, {0.0, 10.0}}
-	cross := NewBlendCrossover[float64](0.0, 0.5, bounds) // Вероятность 0!
+	cross := NewBlendCrossover[float64](0.0, 0.5, bounds, 0)
 
 	p1 := genetic.Individual[float64]{Genes: []float64{2.0, 3.0}}
 	p2 := genetic.Individual[float64]{Genes: []float64{8.0, 7.0}}
@@ -26,7 +26,7 @@ func TestBLXCrossover_ProbZero(t *testing.T) {
 
 func TestBLXCrossover_BoundsConstraint(t *testing.T) {
 	bounds := [][]float64{{4.0, 6.0}, {4.0, 6.0}}
-	cross := NewBlendCrossover[float64](1.0, 2.0, bounds)
+	cross := NewBlendCrossover[float64](1.0, 2.0, bounds, 0)
 
 	p1 := genetic.Individual[float64]{Genes: []float64{4.5, 4.5}}
 	p2 := genetic.Individual[float64]{Genes: []float64{5.5, 5.5}}
@@ -45,7 +45,7 @@ func TestBLXCrossover_BoundsConstraint(t *testing.T) {
 
 func TestSBXCrossover_BoundsConstraint(t *testing.T) {
 	bounds := [][]float64{{0.0, 10.0}}
-	cross := NewSBXCrossover[float64](1.0, 0.5, bounds)
+	cross := NewSBXCrossover[float64](1.0, 0.5, bounds, 0)
 
 	p1 := genetic.Individual[float64]{Genes: []float64{1.0}}
 	p2 := genetic.Individual[float64]{Genes: []float64{9.0}}

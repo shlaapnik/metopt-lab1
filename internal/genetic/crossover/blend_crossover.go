@@ -11,13 +11,15 @@ type BLXCrossover[V genetic.Number] struct {
 	Prob   float64
 	Alpha  float64
 	Bounds [][]float64
+	rand   *rand.Rand
 }
 
-func NewBlendCrossover[V genetic.Number](prob float64, alpha float64, bounds [][]float64) *BLXCrossover[V] {
+func NewBlendCrossover[V genetic.Number](prob float64, alpha float64, bounds [][]float64, seed int) *BLXCrossover[V] {
 	return &BLXCrossover[V]{
 		Prob:   prob,
 		Alpha:  alpha,
 		Bounds: bounds,
+		rand:   genetic.NewRand(seed),
 	}
 }
 

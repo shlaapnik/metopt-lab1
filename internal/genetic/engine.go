@@ -31,6 +31,7 @@ func NewEngine[V Number](
 	popSize int,
 	generations int,
 	weight float64,
+	seed int,
 ) *Engine[V] {
 	if popSize <= 0 {
 		popSize = 100
@@ -53,7 +54,7 @@ func NewEngine[V Number](
 		Crossover:   crossover,
 		Mutator:     mutator,
 		Replacement: replacement,
-		rand:        NewRand(),
+		rand:        NewRand(seed),
 	}
 }
 

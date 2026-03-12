@@ -27,9 +27,9 @@ func TestRunGeneticPerformance(t *testing.T) {
 		return val
 	}
 
-	sel := selection.NewTournament[float64](3)
-	cross := crossover.NewSBXCrossover[float64](0.9, 20.0, bounds)
-	mut := mutation.NewGaussianMutator[float64](0.1, bounds, 0.01)
+	sel := selection.NewTournament[float64](3, 0)
+	cross := crossover.NewSBXCrossover[float64](0.9, 20.0, bounds, 0)
+	mut := mutation.NewGaussianMutator[float64](0.1, bounds, 0.01, 0)
 	repl := replacement.NewElitismReplacement[float64](8)
 
 	genFunc := func(index int, b []float64) float64 {
@@ -47,6 +47,7 @@ func TestRunGeneticPerformance(t *testing.T) {
 		350,
 		100,
 		-1.0,
+		0,
 	)
 
 	run := RunGenetic(engine)
@@ -86,9 +87,9 @@ func TestRunGeneticPerformance5D(t *testing.T) {
 		return val
 	}
 
-	sel := selection.NewTournament[float64](5)
-	cross := crossover.NewSBXCrossover[float64](0.9, 20.0, bounds)
-	mut := mutation.NewGaussianMutator[float64](0.2, bounds, 0.02)
+	sel := selection.NewTournament[float64](5, 0)
+	cross := crossover.NewSBXCrossover[float64](0.9, 20.0, bounds, 0)
+	mut := mutation.NewGaussianMutator[float64](0.2, bounds, 0.02, 0)
 	repl := replacement.NewElitismReplacement[float64](10)
 
 	genFunc := func(index int, b []float64) float64 {
@@ -106,6 +107,7 @@ func TestRunGeneticPerformance5D(t *testing.T) {
 		400,
 		200,
 		-1.0,
+		0,
 	)
 
 	run := RunGenetic(engine)
