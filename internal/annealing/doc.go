@@ -1,3 +1,14 @@
 package annealing
 
-// Пакет реализует метод имитации отжига для оптимизации функции-черного ящика.
+// Пакет annealing реализует метод имитации отжига для оптимизации функции-черного ящика.
+//
+// Реализованные функции:
+//   - DefaultConfig
+//   - Optimize
+//   - validateConfig
+//   - validatePointInBounds
+//   - evaluate
+//   - generateNeighbor
+//   - shouldAccept
+//   - copyPoint
+//   - clamp
