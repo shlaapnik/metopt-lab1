@@ -1,0 +1,46 @@
+package mutation
+
+import (
+	"math/rand"
+
+	"metopt-lab1/internal/genetic"
+)
+
+type GaussianMutator[V genetic.Number] struct {
+	Prob   float64
+	Bounds [][]float64
+	Scale  float64
+	rand   *rand.Rand
+}
+
+func NewGaussianMutator[V genetic.Number](prob float64, bounds [][]float64, scale float64, seed int) *GaussianMutator[V] {
+	return &GaussianMutator[V]{
+		Prob:   prob,
+		Bounds: bounds,
+		Scale:  scale,
+		rand:   genetic.NewRand(seed),
+	}
+}
+
+func (m *GaussianMutator[V]) Mutate(indiv *genetic.Individual[V]) {
+	if rand.Float64() > m.Prob {
+		return
+	}
+
+	dim := len(indiv.Genes)
+	if dim == 0 {
+		return
+	}
+
+	idx := rand.Intn(dim)
+
+	minBound := m.Bounds[idx][0]
+	maxBound := m.Bounds[idx][1]
+
+	stdDev := (maxBound - minBound) * m.Scale
+
+	newValue := rand.NormFloat64()*stdDev + float64(indiv.Genes[idx])
+
+	clamped := genetic.Clamp(newValue, minBound, maxBound)
+	indiv.Genes[idx] = V(clamped)
+}
